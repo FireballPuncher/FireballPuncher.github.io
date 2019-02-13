@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Click mania</title>
+    <style>
+      img{
+        width:50%;
+        margin:0 auto;
+        flex-wrap: wrap;
+        transition: 0.2s;
+        animation-duration: 2s;
+        animation-name: fadeIn;
+      }
+      img:active{
+        transform: scale(1.2);
+      }
+      @keyframes fadeIn{
+        o%{
+          opacity: 0;
+          transform: scale(0);
+        }
+        100%{
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class = "gameplay">
+      <h2 class="title">Clickeria - click to back a Pizza!</h2>
+      <img src="https://i.imgur.com/8btzgzF.jpg" onclick = "addMoney(amountPerClick)" width = 200>
+      <h4>Current Money: <span id="moneyValue">0</span></h4>
+        <h4 id="progressText"></h4>
+      <div class= "upgradeArea">
+        <div class="pizzaPrice">
+          <p>Your pizza sells for $<span id="currentPizzaPrice">2</span>!</p>
+          <button onclick="increaseSellingPrice();">Click to Increase Price! <span id="priceSpan">($0)</span></button>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const currentMoney = document.getElementById('moneyValue');
+      const currentPizzaPrice = document.getElementById('currentPizzaPrice');
+      const priceSpan = document.getElementById('priceSpan');
+      const progressText = document.getElementById('progressText');
+
+
+     
+
+      var money = 0;
+      var moneyOverLifetime = 0;
+      var amountPerClick = 2;
+      var costToUpgrade;
+
+      const massagelist = ["You're selling pizza slices from a stand on the sidewalk, We all gotta start somewhere, right?" ,
+                           "Hey look, your pizza is starting to get customers! Keep this up and you'll have your own pizza someday!" ,
+                           "CONGRATS! You just rented your first pizzeria location!" ,
+                           "Wow this pizza is starting to get busy. Keep it up and you might have to get another location yo seat all there customers!" ,
+                           "A 2nd location??? Great job, your pizza is really grwoing now!"];
+
+      progressText.innerHTML = massagelist[0];
+
+      function addMoney(amountToAdd){
+        money += amountToAdd;
+        moneyOverLifetime += amountToAdd;
+        currentMoney.innerHTML = money;
+        updateProgressMessage();
+      }
+
+      function deductMoney(amountToDeduct){
+        money -= amountToDeduct;
+        currentMoney.innerHTML = money;
+      }
+
+      function increaseSellingPrice(){
+        costToUpgrade = 50 * parseInt(currentPizzaPrice.innerHTML);
+
+        if(money >= costToUpgrade){
+          deductMoney(costToUpgrade);
+          amountPerClick += 2;
+          currentPizzaPrice.innerHTML = amountPerClick;
+        }
+      costToUpgrade = 50 * parseInt(currentPizzaPrice.innerHTML);
+      priceSpan.innerHTML = "($ " + costToUpgrade + ")";
+    }
+
+      function updateProgressMessage(){
+        if (moneyOverLifetime >= 1000)
+           progressText.innerHTML = messagelist[4];
+        else if (moneyOverLifetime >= 850)
+           progressText.innerHTML = messagelist[3];
+        else if (moneyOverLifetime >= 500)
+           progressText.innerHTML = messagelist[2];
+        else if (moneyOverLifetime >= 300)
+           progressText.innerHTML = massagelist[1];
+        else (moneyOverLifetime >= 100)
+           progressText.innerHTML = messagelist[0];
+       }
+      
+    </script>
+  </body>
+</html>
